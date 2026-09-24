@@ -50,7 +50,7 @@ function createTask(data) {
     updatedAt: now,
   };
   tasks.set(task.id, task);
-  return task;
+  return { ...task };
 }
 
 function getAllTasks() {
@@ -69,14 +69,15 @@ function updateTask(id, data) {
   const task = getTaskById(id);
   validateTaskInput(data, { partial: true });
 
-  if (data.title !== undefined) task.title = data.title.trim();
-  if (data.description !== undefined) task.description = data.description;
-  if (data.status !== undefined) task.status = data.status;
-  if (data.priority !== undefined) task.priority = data.priority;
-  task.updatedAt = new Date().toISOString();
+  const updated = { ...task };
+  if (data.title !== undefined) updated.title = data.title.trim();
+  if (data.description !== undefined) updated.description = data.description;
+  if (data.status !== undefined) updated.status = data.status;
+  if (data.priority !== undefined) updated.priority = data.priority;
+  updated.updatedAt = new Date().toISOString();
 
-  tasks.set(id, task);
-  return task;
+  tasks.set(id, updated);
+  return updated;
 }
 
 function deleteTask(id) {
