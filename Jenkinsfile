@@ -51,5 +51,12 @@ pipeline {
                 sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
+
+        stage('Deploy') {
+            steps {
+                sh 'docker rm -f taskmaster || true'
+                sh "docker run -d --name taskmaster -p 3000:3000 ${IMAGE_NAME}:${IMAGE_TAG}"
+            }
+        }
     }
 }
