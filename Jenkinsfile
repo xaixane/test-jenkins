@@ -59,4 +59,17 @@ pipeline {
             }
         }
     }
+
+    post {
+        failure {
+            mail to: 'wooffcode@gmail.com',
+                 subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "Build #${env.BUILD_NUMBER} failed.\nDetails: ${env.BUILD_URL}console"
+        }
+        fixed {
+            mail to: 'wooffcode@gmail.com',
+                 subject: "BACK TO NORMAL: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "Build #${env.BUILD_NUMBER} passed after an earlier failure.\nDetails: ${env.BUILD_URL}"
+        }
+    }
 }
