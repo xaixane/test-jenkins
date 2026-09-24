@@ -45,7 +45,7 @@ function createTask(data) {
     title: data.title.trim(),
     description: data.description || '',
     status: data.status || 'pending',
-    priority: data.priority || 'medium',
+    priority: data.priority || 'low',
     createdAt: now,
     updatedAt: now,
   };
